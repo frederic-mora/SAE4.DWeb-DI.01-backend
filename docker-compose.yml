@@ -1,7 +1,6 @@
 services:
 
-  nginx:
-    container_name: sae-nginx
+  sae-nginx:
     image: nginx:latest
     ports:
       - "8080:8080" # backend
@@ -11,8 +10,7 @@ services:
       - ./backend:/app/backend
       - ./frontend:/app/frontend
 
-  frontend:
-    container_name: sae-frontend
+  sae-frontend:
     build: 
       context: .
       dockerfile: ./docker/frontend/Dockerfile
@@ -23,8 +21,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
 
-  backend:
-    container_name: sae-backend
+  sae-backend:
     build:
       context: .
       dockerfile: docker/backend/Dockerfile
@@ -33,26 +30,25 @@ services:
     volumes:
       - ./backend:/app/backend
 
-  mysql:
-    container_name: sae-database
+  sae-mysql:
     image: mysql:8
     volumes:
       - database:/var/lib/mysql
+      - ./docker/mysql/sql_import_scripts/:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: "SAE4_DWeb_DI_01"
   
-  phpmyadmin:
-    container_name: sae-phpmyadmin
+  sae-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: sae-mysql
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
       - "8070:80"
     depends_on:
-      - mysql
+      - sae-mysql
 
 volumes:
   database:
