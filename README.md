@@ -29,18 +29,18 @@ export default defineConfig({
 Il faut ensuite exécuter ces commandes :
 ```
 # Installe les dépendances pour le frontend
-docker-compose run --rm frontend npm install
+docker compose run --rm frontend npm install
 
 # Installe les dépendances pour le backend
-docker-compose run --rm backend composer install
+docker compose run --rm backend composer install
 
 # Lance les migrations pour avoir une base de données fonctionnelle
-docker-compose run --rm backend php bin/console doctrine:migrations:migrate --no-interaction
+docker compose run --rm backend php bin/console doctrine:migrations:migrate --no-interaction
 ```
 
 ## Lancer l'environnement
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Liens
